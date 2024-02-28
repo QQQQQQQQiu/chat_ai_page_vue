@@ -23,7 +23,7 @@
     </div>
     <div class="footer sticky bottom-0 w-full p-6 pb-8">
       <div class="flex">
-        <input class="input" type="text" placeholder="请输入" v-model="inputControl.messageContent" @keydown.enter="inputControl.submit()" />
+        <input class="input" type="text" placeholder="发送“\”重新对话" v-model="inputControl.messageContent" @keydown.enter="inputControl.submit()" />
         <button class="btn" :disabled="inputControl.isTalking" @click="inputControl.submit()">
           {{ '发送' }}
         </button>
@@ -53,7 +53,7 @@
       const helloMsg = {
         role: 'waiter',
         content: `你好，我是AI语言模型，我可以提供一些常用服务和信息，例如：
-        
+
   1. 翻译：我可以把中文翻译成英文，英文翻译成中文，还有其他一些语言翻译，比如法语、日语、西班牙语等。
 
   2. 咨询服务：如果你有任何问题需要咨询，例如健康、法律、投资等方面，我可以尽可能为你提供帮助。
@@ -107,6 +107,11 @@
     submit: async () => {
       if (inputControl.isTalking) return
       let content = inputControl.messageContent
+      if (content === '\\') {
+        inputControl.clear()
+        messageControl.init()
+        return
+      }
       if (!content) return
       inputControl.isTalking = true
       messageControl.add('user', content)
